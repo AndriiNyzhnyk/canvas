@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CANVAS</title>
+    <style>
+    </style>
+</head>
+<body>
+
+<canvas></canvas>
+
+<script>
+    var myCanvas = document.getElementsByTagName("canvas")[0];
+    myCanvas.width = 300;
+    myCanvas.height = 300;
+    var ctx = myCanvas.getContext("2d");
+
+    function drawLine(context, startX, startY, endX, endY) {
+        context.beginPath();
+        context.moveTo(startX, startY);
+        context.lineTo(endX, endY);
+        context.lineWidth = 5;
+        context.stroke();
+    }
+
+    drawLine(ctx, 50, 20, 200, 200);
+    //    drawLine(ctx, 50, 20, 10, 200);
+
+
+    function drawArc(ctx, color, x, y, rad, stA, endA) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(x, y, rad, stA, endA);
+        ctx.fill();
+    }
+    //    drawArc(ctx, "green", 100, 100, 50, 0, 3.14);
+    //    drawArc(ctx, "red", 100, 100, 50, 3.14, 6.28);
+    function drawPieSlice(ctx, color, x, y, x2, y2, rad, stA, eA) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.arc(x2, y2, rad, stA, eA);
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    //    drawPieSlice(ctx, "blue", 100, 100, 100, 100, 100, 0, 2);
+    //    drawPieSlice(ctx, "white", 100, 100, 100, 100, 20, 0, 2.1);
+
+    function drawSliceAnimate(ctx,color,x,y,x2,y2,r,sA,eA, time) {
+        var defAngle = sA;
+        var interval = setInterval(function () {
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.arc(x2, y2, r, sA, defAngle);
+            ctx.closePath();
+            ctx.fill();
+            defAngle += 0.017;
+            if (defAngle > eA) {
+                clearInterval(interval);
+            }
+        }, time);
+    };
+
+    drawSliceAnimate(ctx, '#333', 100, 100, 100, 100, 50, 0, 2, 50);
+</script>
+</body>
+</html>
